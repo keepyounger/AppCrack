@@ -1,0 +1,20 @@
+PODS:
+  - FLEX (2.4.0)
+  - WoodPeckeriOS (1.1.0)
+
+DEPENDENCIES:
+  - FLEX
+  - WoodPeckeriOS
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FLEX
+    - WoodPeckeriOS
+
+SPEC CHECKSUMS:
+  FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
+  WoodPeckeriOS: f80c5c4de2432ac89485d37d591483b36792358e
+
+PODFILE CHECKSUM: 7df57c16ace84a532a65dbbd353ff3363ce02258
+
+COCOAPODS: 1.5.3

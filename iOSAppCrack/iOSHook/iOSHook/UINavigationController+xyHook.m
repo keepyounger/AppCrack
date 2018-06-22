@@ -7,8 +7,6 @@
 //
 
 #import "UINavigationController+xyHook.h"
-#import "JRSwizzle.h"
-#import <objc/runtime.h>
 
 void injected_function(void);
 
