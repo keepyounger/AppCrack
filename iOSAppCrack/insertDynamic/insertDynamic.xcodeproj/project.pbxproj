@@ -299,7 +299,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/opt/iOSOpenDev/bin/iosod --xcbp";
+			shellScript = ./link.sh;
 		};
 		5AA60A791EC3241A00FA0043 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -312,7 +312,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#def var 声明变量等号(=)后面不能有空格，否者变量就是空了\nAPPNAME=${TARGET_NAME}\nLIBNAME=\"libinsertDynamic\"\nIDENTIFIER=${PRODUCT_BUNDLE_IDENTIFIER}\nSTORYBOARD=\"InsertStoryboard\"\n\n#replace sign\nplutil -replace application-identifier -string R9FM9QJB4R.${IDENTIFIER} Entitlements.plist\nplutil -replace keychain-access-groups -xml \"<array><string>R9FM9QJB4R.\"${IDENTIFIER}\"</string></array>\" Entitlements.plist\nrm -rf ${APPNAME}.app/embedded.mobileprovision\ncp LatestBuild/${APPNAME}.app/embedded.mobileprovision ${APPNAME}.app/\n\n#insertlib\nrm -rf ${APPNAME}.app/${LIBNAME}.dylib\nmv LatestBuild/${LIBNAME}.dylib ${APPNAME}.app/\n\n#storyboard\nrm -rf ${APPNAME}.app/${STORYBOARD}.storyboardc\nmv LatestBuild/${APPNAME}.app/${STORYBOARD}.storyboardc ${APPNAME}.app/\n\n#codesign\ncodesign -f -s \"iPhone Developer: xiangyang li (UJM6S5B55K)\" ${APPNAME}.app/${LIBNAME}.dylib\ncodesign -f -s \"iPhone Developer: xiangyang li (UJM6S5B55K)\" --entitlements Entitlements.plist ${APPNAME}.app\n\n#instead of app\nrm -rf LatestBuild/${APPNAME}.app\ncp -R ${APPNAME}.app LatestBuild/";
+			shellScript = ./sign.sh;
 		};
 /* End PBXShellScriptBuildPhase section */
 

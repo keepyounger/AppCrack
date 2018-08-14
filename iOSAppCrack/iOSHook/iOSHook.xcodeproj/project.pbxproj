@@ -291,7 +291,7 @@
 		5AD86880205F9D610067A687 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = lixy;
 				TargetAttributes = {
 					5AD86888205F9D610067A687 = {
@@ -393,7 +393,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf LatestBuild\nln -s \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}\" LatestBuild";
+			shellScript = ./link.sh;
 		};
 		5AD868AF205F9DF00067A687 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -406,7 +406,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#def var 声明变量等号(=)后面不能有空格，否者变量就是空了\nAPPNAME=${TARGET_NAME}\nLIBNAME=\"iOSHook\"\nIDENTIFIER=${PRODUCT_BUNDLE_IDENTIFIER}\n\n#replace sign\nplutil -replace application-identifier -string R9FM9QJB4R.${IDENTIFIER} Entitlements.plist\nplutil -replace keychain-access-groups -xml \"<array><string>R9FM9QJB4R.\"${IDENTIFIER}\"</string></array>\" Entitlements.plist\nrm -rf ${APPNAME}.app/embedded.mobileprovision\ncp LatestBuild/${APPNAME}.app/embedded.mobileprovision ${APPNAME}.app/\n\n#insertlib\nrm -rf ${APPNAME}.app/${LIBNAME}.framework\nmv LatestBuild/${LIBNAME}.framework ${APPNAME}.app/\n\nEXEFILENAME=$(plutil -extract \"CFBundleExecutable\" xml1 ${APPNAME}.app/Info.plist -o temp.plist && plutil -p temp.plist)\nEXEFILENAME=$(echo ${EXEFILENAME} | sed 's/\\\"//g')\ninsert-lib ${APPNAME}.app/${EXEFILENAME} ${LIBNAME}.framework/${LIBNAME}\nrm -rf temp.plist\n\n#codesign\ncodesign -f -s \"iPhone Developer: xiangyang li (UJM6S5B55K)\" ${APPNAME}.app/${LIBNAME}.framework\ncodesign -f -s \"iPhone Developer: xiangyang li (UJM6S5B55K)\" --entitlements Entitlements.plist ${APPNAME}.app\n\n#instead of app\nrm -rf LatestBuild/${APPNAME}.app\ncp -R ${APPNAME}.app LatestBuild/";
+			shellScript = ./sign.sh;
 		};
 		70947A868976F8C0B6F4960A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -499,6 +499,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -506,6 +507,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -557,6 +559,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -564,6 +567,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

@@ -229,7 +229,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf LatestBuild\nln -s \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}\" LatestBuild";
+			shellScript = ./link.sh;
 		};
 		5A2A86621EC4497100DA7BC1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -242,7 +242,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APPNAME=${TARGET_NAME}\nLIBNAME=\"libinsertDynamic\"\n\nrm -rf ${APPNAME}.app/Contents/MacOS/${LIBNAME}.dylib\nmv LatestBuild/${LIBNAME}.dylib ${APPNAME}.app/Contents/MacOS/\n\nrm -rf LatestBuild/${APPNAME}.app\ncp -R ${APPNAME}.app LatestBuild/";
+			shellScript = ./sign.sh;
 		};
 /* End PBXShellScriptBuildPhase section */
 
