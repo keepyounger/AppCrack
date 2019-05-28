@@ -44,14 +44,14 @@ echo "app名称:"$APPName
 echo "正在操作，请稍等..."
 
 #转到桌面
-mkdir ~/Desktop/$EXEName
+mkdir ~/Desktop/"$EXEName"
 
-cp -R ./iOSHook ~/Desktop/$EXEName/
+cp -R ./iOSHook ~/Desktop/"$EXEName"/
 
 cd ~/Desktop
 
 #转到新建目录
-cd $EXEName
+cd "$EXEName"
 
 echo "正在复制APP..."
 cp -R "$APPPath" ./
@@ -59,18 +59,18 @@ cp -R "$APPPath" ./
 echo "正在复制可执行文件..."
 #复制可执行文件
 mkdir temp
-cp ${APPName}/${EXEName} temp
+cp "${APPName}"/"${EXEName}" temp
 
 echo "正在修改可执行文件..."
 
-insert-lib temp/${EXEName} iOSHook.framework/iOSHook > /dev/null 2>&1
-temstr=$(lipo -info temp/${EXEName})
+insert-lib temp/"${EXEName}" iOSHook.framework/iOSHook > /dev/null 2>&1
+temstr=$(lipo -info temp/"${EXEName}")
 #echo $temstr
 
 archs=${temstr##*:}
 #echo $archs
 
-armsPath=temp/${EXEName}
+armsPath=temp/"${EXEName}"
 
 flag=$(stringInString "arm64" "$archs")
 #echo $flag
@@ -78,30 +78,30 @@ flag=$(stringInString "arm64" "$archs")
 if [ "$archs" == " arm64" ]
 then
     echo "arm64 only"
-    cp $armsPath temp/arm64
+    cp "$armsPath" temp/arm64
     chmod +x temp/arm64
-    rm ${APPName}/${EXEName}
-    cp temp/arm64 ${APPName}/${EXEName}
+    rm "${APPName}"/"${EXEName}"
+    cp temp/arm64 "${APPName}"/"${EXEName}"
 elif [ "$flag" ]
 then
-    lipo $armsPath -thin arm64 -output temp/arm64
+    lipo "$armsPath" -thin arm64 -output temp/arm64
     chmod +x temp/arm64
-    rm ${APPName}/${EXEName}
-    cp temp/arm64 ${APPName}/${EXEName}
+    rm "${APPName}"/"${EXEName}"
+    cp temp/arm64 "${APPName}"/"${EXEName}"
     echo "已自动选择arm64"
 else
-    lipo $armsPath -thin armv7 -output temp/armv7
+    lipo "$armsPath" -thin armv7 -output temp/armv7
     chmod +x temp/armv7
-    rm ${APPName}/${EXEName}
-    cp temp/armv7 ${APPName}/${EXEName}
+    rm "${APPName}"/"${EXEName}"
+    cp temp/armv7 "${APPName}"/"${EXEName}"
     echo "已自动选择armv7"
 fi
 
 echo "正在签名..."
-codesign -f -s "iPhone Developer: xiangyang li (UJM6S5B55K)" ${APPName}/*/*.dylib  > /dev/null 2>&1
-codesign -f -s "iPhone Developer: xiangyang li (UJM6S5B55K)" ${APPName}/*/*.framework  > /dev/null 2>&1
+codesign -f -s "iPhone Developer: xiangyang li (UJM6S5B55K)" "${APPName}"/*/*.dylib  > /dev/null 2>&1
+codesign -f -s "iPhone Developer: xiangyang li (UJM6S5B55K)" "${APPName}"/*/*.framework  > /dev/null 2>&1
 #删除扩展程序
-rm -rf ${APPName}/*/*.appex
+rm -rf "${APPName}"/*/*.appex
 echo "签名完成"
 
 echo "是否修改Bundle identifier？(y/n)"
@@ -110,11 +110,11 @@ if [ "$flag" == "y" ]
 then
     echo "输入Bundle identifier："
     read BundleIdentifier
-    plutil -replace CFBundleIdentifier -string ${BundleIdentifier} ${APPName}/info.plist
+    plutil -replace CFBundleIdentifier -string ${BundleIdentifier} "${APPName}"/info.plist
 
 fi
 
-mv ${APPName} iOSHook/APP.app
+mv "${APPName}" iOSHook/APP.app
 
 rm -rf temp
 

@@ -44,14 +44,14 @@ echo "app名称:"$APPName
 echo "正在操作，请稍等..."
 
 #转到桌面
-mkdir ~/Desktop/$EXEName
+mkdir ~/Desktop/"$EXEName"
 
-cp -R ./insertDynamic ~/Desktop/$EXEName/
+cp -R ./insertDynamic ~/Desktop/"$EXEName"/
 
 cd ~/Desktop
 
 #转到新建目录
-cd $EXEName
+cd "$EXEName"
 
 echo "正在复制APP..."
 cp -R "$APPPath" ./
@@ -59,21 +59,21 @@ cp -R "$APPPath" ./
 echo "正在复制可执行文件..."
 #复制可执行文件
 mkdir temp
-cp ${APPName}/Contents/MacOS/${EXEName} temp
+cp "${APPName}"/Contents/MacOS/"${EXEName}" temp
 
 echo "正在修改可执行文件..."
 
-insert-lib temp/${EXEName} libinsertDynamic.dylib > /dev/null 2>&1
-temstr=$(lipo -info temp/${EXEName})
+insert-lib temp/"${EXEName}" libinsertDynamic.dylib > /dev/null 2>&1
+temstr=$(lipo -info temp/"${EXEName}")
 #echo $temstr
 
 archs=${temstr##*:}
 echo $archs
 
-rm ${APPName}/Contents/MacOS/${EXEName}
-cp temp/${EXEName} ${APPName}/Contents/MacOS/${EXEName}
+rm "${APPName}"/Contents/MacOS/"${EXEName}"
+cp temp/"${EXEName}" "${APPName}"/Contents/MacOS/"${EXEName}"
 
-mv ${APPName} insertDynamic/APP.app
+mv "${APPName}" insertDynamic/APP.app
 
 rm -rf temp
 
